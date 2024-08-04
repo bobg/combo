@@ -7,7 +7,7 @@ import (
 	"github.com/bobg/seqs"
 )
 
-// Permutations produces an iterator over all permutations of s.
+// Permutations produces a sequence containing all permutations of s.
 // It uses Heap's Algorithm.
 // See https://en.wikipedia.org/wiki/Heap%27s_algorithm.
 //
@@ -48,7 +48,7 @@ func permutations[T any, S ~[]T](s S, n int, ch chan<- S) error {
 	return nil
 }
 
-// Combinations produces an iterator over all n-length combinations of distinct elements from s.
+// Combinations produces a sequence containing all n-length combinations of distinct elements from s.
 //
 // If s is [1 2 3] and n is 2, this function will produce:
 //
@@ -95,7 +95,7 @@ func Combinations[T any, S ~[]T](s S, n int) iter.Seq[S] {
 	return it
 }
 
-// CombinationsWithReplacement produces an iterator over all n-length combinations of possibly repeated elements from s.
+// CombinationsWithReplacement produces a sequence containing all n-length combinations of possibly repeated elements from s.
 //
 // If s is [1 2 3] and n is 2, this function will produce:
 //
