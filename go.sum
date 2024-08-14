@@ -1,2 +1,6 @@
+github.com/bobg/go-generics/v3 v3.7.0 h1:4SJHDWqONTRcA8al6491VW/ys6061bPCcTcI7YnIHPc=
+github.com/bobg/go-generics/v3 v3.7.0/go.mod h1:wGlMLQER92clsh3cJoQjbUtUEJ03FoxnGhZjaWhf4fM=
 github.com/bobg/seqs v0.0.0-20240804164725-0dd86edacaa9 h1:mwV0aeo/jEsf+CKDvlpzNx+F7RESfSJAYCLR/duWGug=
 github.com/bobg/seqs v0.0.0-20240804164725-0dd86edacaa9/go.mod h1:XAM7wAUflY7ZhAYHUprHZHLZnK43LgklDjtJXglf8Ek=
+github.com/bobg/seqs v0.3.0 h1:5OJP7ZpEflbvQoGBu9CICz73xIiRUGDb4qH1eprDNu8=
+github.com/bobg/seqs v0.3.0/go.mod h1:icgB+vXIoU6s675tLYVAgcUYry1PkYwgEKvzOuFemOk=
