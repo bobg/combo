@@ -104,9 +104,6 @@ func CombinationsWithReplacement[T any, S ~[]T](s S, n int) iter.Seq[S] {
 	if n == 0 {
 		return seqs.Empty[S]
 	}
-	if n > len(s) {
-		return seqs.Empty[S]
-	}
 	it, _ := seqs.Go(func(ch chan<- S) error {
 		var (
 			counters = make([]int, n)
