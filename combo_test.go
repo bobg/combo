@@ -115,6 +115,10 @@ func TestCombinationsWithReplacement(t *testing.T) {
 		inp:  []int{1, 2, 3},
 		n:    3,
 		want: [][]int{{1, 1, 1}, {1, 1, 2}, {1, 1, 3}, {1, 2, 2}, {1, 2, 3}, {1, 3, 3}, {2, 2, 2}, {2, 2, 3}, {2, 3, 3}, {3, 3, 3}},
+	}, {
+		inp:  []int{1, 2},
+		n:    3,
+		want: [][]int{{1, 1, 1}, {1, 1, 2}, {1, 2, 2}, {2, 2, 2}},
 	}}
 
 	for i, tc := range cases {
