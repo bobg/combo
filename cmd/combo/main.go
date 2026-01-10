@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"iter"
 	"os"
 	"slices"
@@ -23,68 +24,75 @@ func main() {
 }
 
 func run() error {
-	return subcmd.Run(context.Background(), maincmd{}, os.Args[1:])
+	return run2(os.Stdin, os.Stdout, os.Args[1:])
 }
 
-type maincmd struct{}
+func run2(r io.Reader, w io.Writer, args []string) error {
+	return subcmd.Run(context.Background(), maincmd{r: r, w: w}, args)
+}
+
+type maincmd struct {
+	r io.Reader
+	w io.Writer
+}
 
 func (m maincmd) Subcmds() subcmd.Map {
 	return subcmd.Commands(
-		"perm", doPerm, "permutations", nil,
-		"comb", doComb, "combinations", subcmd.Params(
+		"perm", m.doPerm, "permutations", nil,
+		"comb", m.doComb, "combinations", subcmd.Params(
 			"n", subcmd.Int, 0, "number of elements to choose",
 		),
-		"rcomb", doRComb, "combinations with replacement", subcmd.Params(
+		"rcomb", m.doRComb, "combinations with replacement", subcmd.Params(
 			"n", subcmd.Int, 0, "number of elements to choose",
 		),
 	)
 }
 
-func doPerm(ctx context.Context, args []string) error {
-	slice, err := readInput(args)
+func (m maincmd) doPerm(ctx context.Context, args []string) error {
+	slice, err := m.readInput(args)
 	if err != nil {
 		return errors.Wrap(err, "reading input")
 	}
 	perms := combo.Permutations(slice)
-	return writeOutput(perms)
+	return m.writeOutput(perms)
 }
 
-func doComb(ctx context.Context, n int, args []string) error {
+func (m maincmd) doComb(ctx context.Context, n int, args []string) error {
 	if n <= 0 {
 		return fmt.Errorf("n must be positive")
 	}
-	slice, err := readInput(args)
+	slice, err := m.readInput(args)
 	if err != nil {
 		return errors.Wrap(err, "reading input")
 	}
 	combs := combo.Combinations(slice, n)
-	return writeOutput(combs)
+	return m.writeOutput(combs)
 }
 
-func doRComb(ctx context.Context, n int, args []string) error {
+func (m maincmd) doRComb(ctx context.Context, n int, args []string) error {
 	if n <= 0 {
 		return fmt.Errorf("n must be positive")
 	}
-	slice, err := readInput(args)
+	slice, err := m.readInput(args)
 	if err != nil {
 		return errors.Wrap(err, "reading input")
 	}
 	combs := combo.CombinationsWithReplacement(slice, n)
-	return writeOutput(combs)
+	return m.writeOutput(combs)
 }
 
-func readInput(args []string) ([]string, error) {
+func (m maincmd) readInput(args []string) ([]string, error) {
 	if len(args) > 0 {
 		return args, nil
 	}
-	lines, errptr := seqs.Lines(os.Stdin)
+	lines, errptr := seqs.Lines(m.r)
 	result := slices.Collect(lines)
 	return result, errors.Wrap(*errptr, "reading lines from stdin")
 }
 
-func writeOutput(seq iter.Seq[[]string]) error {
+func (m maincmd) writeOutput(seq iter.Seq[[]string]) error {
 	for item := range seq {
-		if _, err := fmt.Printf("%s\n", strings.Join(item, " ")); err != nil {
+		if _, err := fmt.Fprintf(m.w, "%s\n", strings.Join(item, " ")); err != nil {
 			return errors.Wrap(err, "writing output")
 		}
 	}
