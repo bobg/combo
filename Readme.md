@@ -4,6 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/bobg/combo)](https://goreportcard.com/report/github.com/bobg/combo)
 [![Tests](https://github.com/bobg/combo/actions/workflows/go.yml/badge.svg)](https://github.com/bobg/combo/actions/workflows/go.yml)
 [![Coverage Status](https://coveralls.io/repos/github/bobg/combo/badge.svg?branch=main)](https://coveralls.io/github/bobg/combo?branch=main)
+[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)
 
 This is combo,
 a library of combinatorial operations for Go.
